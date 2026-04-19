@@ -25,7 +25,7 @@ bot = AsyncTeleBot(BOT_TOKEN)
 HELP_TEXT = (
     "Привет! Я Poetry Pal — помогу выбрать классические стихи на английском и русском, "
     "потренировать память и напомню о повторах.\n\n"
-    "Сначала нужно заполнить профиль (языки, темы из каталога кнопками, сложность) — без этого стихи из каталога недоступны.\n\n"
+    "Сначала нужно заполнить профиль (языки, темы кнопками — список зависит от языка, сложность) — без этого стихи из каталога недоступны.\n\n"
     "Команды:\n"
     "/start — начать или продолжить анкету профиля\n"
     "/setup — заново пройти анкету (если бот не спрашивает настройки — нажмите это)\n"
@@ -81,14 +81,6 @@ async def api_stats(user_id: int) -> dict:
         r = await client.get(f"{API_URL}/api/v1/learners/{user_id}/stats")
         r.raise_for_status()
         return r.json()
-
-
-async def api_catalog_themes() -> list[str]:
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        r = await client.get(f"{API_URL}/api/v1/recommend/themes")
-        r.raise_for_status()
-        data = r.json()
-        return list(data) if isinstance(data, list) else []
 
 
 async def api_outcome(user_id: int, slug: str, outcome: str) -> None:
@@ -159,9 +151,33 @@ LAST_GRADED_SLUG: dict[int, str | None] = {}
 # Последний slug из ответа чата (коуч мог показать другое произведение — не затирает MEMORIZE_SLUG).
 CHAT_POEM_HINT: dict[int, str | None] = {}
 QUIZ_PENDING: dict[int, bool] = {}
-# Анкета шаг «темы»: порядок меток из API и множественный выбор пользователя (по telegram user id).
-THEME_ORDER: dict[int, list[str]] = {}
+# Анкета шаг «темы»: пары (подпись кнопки, каноническое значение для БД); выбор по telegram user id.
+THEME_PAIRS: dict[int, list[tuple[str, str]]] = {}
 THEME_SELECTION: dict[int, set[str]] = {}
+
+# Подпись на кнопке → строка в learner.themes (пересечение с poem.themes при рекомендации).
+ONBOARDING_EN_THEMES: tuple[tuple[str, str], ...] = (
+    ("Love", "love"),
+    ("War & Conflict", "war"),
+    ("Nature", "nature"),
+)
+ONBOARDING_RU_THEMES: tuple[tuple[str, str], ...] = (
+    ("Любовь", "О любви"),
+    ("Дружба", "О дружбе"),
+    ("Война", "Военные"),
+)
+
+
+def theme_choice_pairs(prefers_en: bool, prefers_ru: bool) -> list[tuple[str, str]]:
+    pairs: list[tuple[str, str]] = []
+    if prefers_en:
+        pairs.extend(ONBOARDING_EN_THEMES)
+    if prefers_ru:
+        pairs.extend(ONBOARDING_RU_THEMES)
+    if not pairs:
+        pairs.extend(ONBOARDING_EN_THEMES)
+        pairs.extend(ONBOARDING_RU_THEMES)
+    return pairs
 
 TG_MSG_LIMIT = 4096
 
@@ -218,13 +234,13 @@ def onboarding_diff_keyboard():
 def onboarding_themes_keyboard(user_id: int):
     from telebot import types
 
-    order = THEME_ORDER.get(user_id) or []
+    pairs = THEME_PAIRS.get(user_id) or []
     sel = THEME_SELECTION.setdefault(user_id, set())
     kb = types.InlineKeyboardMarkup()
     row = []
-    for i, theme in enumerate(order):
-        display = theme if len(theme) <= 30 else theme[:27] + "…"
-        label = f"✓ {display}" if theme in sel else display
+    for i, (caption, canon) in enumerate(pairs):
+        display = caption if len(caption) <= 30 else caption[:27] + "…"
+        label = f"✓ {display}" if canon in sel else display
         row.append(types.InlineKeyboardButton(label, callback_data=f"ob:th:{i}"))
         if len(row) >= 2:
             kb.row(*row)
@@ -241,24 +257,16 @@ def onboarding_themes_keyboard(user_id: int):
 
 async def send_onboarding_themes_step(chat_id: int, user_id: int) -> None:
     try:
-        themes = await api_catalog_themes()
+        p = await api_profile(user_id)
     except httpx.HTTPError as e:
-        await bot.send_message(chat_id, f"Не удалось загрузить темы каталога: {e!s}")
+        await bot.send_message(chat_id, f"Не удалось загрузить профиль: {e!s}")
         return
-    THEME_ORDER[user_id] = themes
+    pairs = theme_choice_pairs(bool(p.get("prefers_english")), bool(p.get("prefers_russian")))
+    THEME_PAIRS[user_id] = pairs
     THEME_SELECTION[user_id] = set()
-    if not themes:
-        await api_patch_profile(user_id, {"themes": [], "onboarding_step": 2})
-        await bot.send_message(
-            chat_id,
-            "В каталоге пока нет меток тем — переходим дальше.\n\n"
-            "Шаг 3 из 3. Выберите комфортную сложность:",
-            reply_markup=onboarding_diff_keyboard(),
-        )
-        return
     await bot.send_message(
         chat_id,
-        "Шаг 2 из 3. Выберите интересующие темы из каталога (можно несколько), затем «Готово». "
+        "Шаг 2 из 3. Выберите интересующие темы (можно несколько), затем «Готово». "
         "«Без тем» — без предпочтений по темам.",
         reply_markup=onboarding_themes_keyboard(user_id),
     )
@@ -302,7 +310,7 @@ async def handle_onboarding_text(chat_id: int, user_id: int, text: str) -> bool:
 
 
 async def onboarding_callback(c):
-    """Inline: ob:lang:*, ob:th:* (темы каталога), ob:diff:*"""
+    """Inline: ob:lang:*, ob:th:* (фиксированные темы EN/RU по языку профиля), ob:diff:*"""
     data = c.data or ""
     parts = data.split(":", 2)
     if len(parts) != 3 or parts[0] != "ob":
@@ -332,7 +340,7 @@ async def onboarding_callback(c):
             chosen = sorted(THEME_SELECTION.get(uid, set()))[:16]
             await api_patch_profile(uid, {"themes": chosen, "onboarding_step": 2})
             THEME_SELECTION.pop(uid, None)
-            THEME_ORDER.pop(uid, None)
+            THEME_PAIRS.pop(uid, None)
             await bot.answer_callback_query(c.id, text="Сохранено")
             await bot.send_message(
                 chat_id,
@@ -343,7 +351,7 @@ async def onboarding_callback(c):
         if code == "skip":
             await api_patch_profile(uid, {"themes": [], "onboarding_step": 2})
             THEME_SELECTION.pop(uid, None)
-            THEME_ORDER.pop(uid, None)
+            THEME_PAIRS.pop(uid, None)
             await bot.answer_callback_query(c.id, text="Ок")
             await bot.send_message(
                 chat_id,
@@ -366,16 +374,16 @@ async def onboarding_callback(c):
         except ValueError:
             await bot.answer_callback_query(c.id)
             return
-        order = THEME_ORDER.get(uid) or []
-        if idx < 0 or idx >= len(order):
+        pairs = THEME_PAIRS.get(uid) or []
+        if idx < 0 or idx >= len(pairs):
             await bot.answer_callback_query(c.id, text="Устарело — /start")
             return
-        theme = order[idx]
+        _, canon = pairs[idx]
         sel = THEME_SELECTION.setdefault(uid, set())
-        if theme in sel:
-            sel.remove(theme)
+        if canon in sel:
+            sel.remove(canon)
         else:
-            sel.add(theme)
+            sel.add(canon)
         await bot.answer_callback_query(c.id, text="Выбор обновлён")
         try:
             await bot.edit_message_reply_markup(

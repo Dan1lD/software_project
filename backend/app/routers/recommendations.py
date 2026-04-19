@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_session
-from app.models.tables import Poem, PoemLanguage
+from app.models.tables import PoemLanguage
 from app.schemas import NextRecommendationResponse, OutcomeRequest, PoemCatalogCard
 from app.services.llm import chat_completion
 from app.services.poem_placeholders import poem_body_for_display
@@ -18,19 +17,6 @@ from app.services.recommendation import (
 )
 
 router = APIRouter(prefix="/recommend", tags=["recommendations"])
-
-
-@router.get("/themes", response_model=list[str])
-async def catalog_theme_tags(session: AsyncSession = Depends(get_session)) -> list[str]:
-    """Уникальные метки тем из всех стихов каталога (для выбора в профиле)."""
-    q = await session.execute(select(Poem.themes))
-    seen: set[str] = set()
-    for (raw,) in q.all():
-        for t in raw or []:
-            s = str(t).strip()
-            if s:
-                seen.add(s)
-    return sorted(seen, key=lambda x: (x.lower(), x))
 
 
 @router.get("/card", response_model=PoemCatalogCard)

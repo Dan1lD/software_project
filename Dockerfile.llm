@@ -1,0 +1,9 @@
+# OpenAI-compatible API via SGLang (same as manual docker run in README).
+# Image must stay lmsysorg/sglang:latest — do not substitute other bases.
+FROM lmsysorg/sglang:latest
+
+EXPOSE 3000
+
+ENTRYPOINT []
+
+CMD ["python3", "-m", "sglang.launch_server", "--model-path", "t-tech/T-lite-it-2.1-FP8", "--host", "0.0.0.0", "--port", "3000"]

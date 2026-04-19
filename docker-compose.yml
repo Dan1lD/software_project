@@ -1,0 +1,72 @@
+services:
+  llm:
+    build:
+      context: .
+      dockerfile: Dockerfile.llm
+    image: poetry-sglang:latest
+    ports:
+      - "${LLM_HOST_PORT:-3000}:3000"
+    env_file:
+      - .env
+    environment:
+      HF_TOKEN: ${HF_TOKEN:-}
+    volumes:
+      - llm_hf_cache:/root/.cache/huggingface
+    ipc: host
+    shm_size: "32g"
+    gpus: all
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python3",
+          "-c",
+          "import urllib.request as u; u.urlopen('http://127.0.0.1:3000/v1/models', timeout=5)",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 40
+      start_period: 300s
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # SQLite on a dedicated volume — do NOT mount over /app/data (that hides CSV + poems.json from the image).
+      DATABASE_URL: sqlite+aiosqlite:////var/lib/poetry/poetry.db
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://llm:3000/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-None}
+      LLM_MODEL: ${LLM_MODEL:-t-tech/T-lite-it-2.1-FP8}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      WHISPER_MODEL_SIZE: ${WHISPER_MODEL_SIZE:-base}
+      WHISPER_DEVICE: ${WHISPER_DEVICE:-cpu}
+      WHISPER_COMPUTE_TYPE: ${WHISPER_COMPUTE_TYPE:-int8}
+    volumes:
+      - poetry_db:/var/lib/poetry
+      - whisper_models:/root/.cache/huggingface
+    depends_on:
+      llm:
+        condition: service_healthy
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    env_file:
+      - .env
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      - api
+
+volumes:
+  poetry_db:
+  whisper_models:
+  llm_hf_cache:

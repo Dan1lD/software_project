@@ -1,0 +1,181 @@
+[
+  {
+    "slug": "blake-tyger",
+    "title": "The Tyger",
+    "author": "William Blake",
+    "language": "en",
+    "era": "Romantic",
+    "themes": [
+      "nature",
+      "wonder",
+      "creation"
+    ],
+    "difficulty": "medium",
+    "excerpt": "Tyger Tyger, burning bright,\nIn the forests of the night;",
+    "full_text": "Tyger Tyger, burning bright,\nIn the forests of the night;\nWhat immortal hand or eye,\nCould frame thy fearful symmetry?\n\nIn what distant deeps or skies.\nBurnt the fire of thine eyes?\nOn what wings dare he aspire?\nWhat the hand, dare seize the fire?\n\nAnd what shoulder, & what art,\nCould twist the sinews of thy heart?\nAnd when thy heart began to beat,\nWhat dread hand? & what dread feet?\n\nWhat the hammer? what the chain,\nIn what furnace was thy brain?\nWhat the anvil? what dread grasp,\nDare its deadly terrors clasp?\n\nWhen the stars threw down their spears\nAnd water'd heaven with their tears:\nDid he smile his work to see?\nDid he who made the Lamb make thee?\n\nTyger Tyger burning bright,\nIn the forests of the night:\nWhat immortal hand or eye,\nDare frame thy fearful symmetry?"
+  },
+  {
+    "slug": "dickinson-hope",
+    "title": "Hope is the thing with feathers",
+    "author": "Emily Dickinson",
+    "language": "en",
+    "era": "19th century",
+    "themes": [
+      "hope",
+      "spirit"
+    ],
+    "difficulty": "easy",
+    "excerpt": "Hope is the thing with feathers\nThat perches in the soul,",
+    "full_text": "Hope is the thing with feathers\nThat perches in the soul,\nAnd sings the tune without the words,\nAnd never stops at all,\n\nAnd sweetest in the gale is heard;\nAnd sore must be the storm\nThat could abash the little bird\nThat kept so many warm.\n\nI've heard it in the chillest land,\nAnd on the strangest sea;\nYet, never, in extremity,\nIt asked a crumb of me."
+  },
+  {
+    "slug": "frost-road",
+    "title": "The Road Not Taken",
+    "author": "Robert Frost",
+    "language": "en",
+    "era": "20th century",
+    "themes": [
+      "choice",
+      "paths",
+      "reflection"
+    ],
+    "difficulty": "easy",
+    "excerpt": "Two roads diverged in a yellow wood,\nAnd sorry I could not travel both",
+    "full_text": "Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\nAnd looked down one as far as I could\nTo where it bent in the undergrowth;\n\nThen took the other, as just as fair,\nAnd having perhaps the better claim,\nBecause it was grassy and wanted wear;\nThough as for that the passing there\nHad worn them really about the same,\n\nAnd both that morning equally lay\nIn leaves no step had trodden black.\nOh, I kept the first for another day!\nYet knowing how way leads on to way,\nI doubted if I should ever come back.\n\nI shall be telling this with a sigh\nSomewhere ages and ages hence:\nTwo roads diverged in a wood, and I—\nI took the one less traveled by,\nAnd that has made all the difference."
+  },
+  {
+    "slug": "shakespeare-sonnet18",
+    "title": "Sonnet 18 (Shall I compare thee...)",
+    "author": "William Shakespeare",
+    "language": "en",
+    "era": "Renaissance",
+    "themes": [
+      "love",
+      "time",
+      "beauty"
+    ],
+    "difficulty": "medium",
+    "excerpt": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:",
+    "full_text": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date;\nSometime too hot the eye of heaven shines,\nAnd often is his gold complexion dimm'd;\nAnd every fair from fair sometime declines,\nBy chance or nature's changing course untrimm'd;\nBut thy eternal summer shall not fade\nNor lose possession of that fair thou ow'st;\nNor shall Death brag thou wander'st in his shade,\nWhen in eternal lines to time thou grow'st:\nSo long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee."
+  },
+  {
+    "slug": "wordsworth-daffodils",
+    "title": "I Wandered Lonely as a Cloud (Daffodils)",
+    "author": "William Wordsworth",
+    "language": "en",
+    "era": "Romantic",
+    "themes": [
+      "nature",
+      "memory",
+      "joy"
+    ],
+    "difficulty": "medium",
+    "excerpt": "I wandered lonely as a cloud\nThat floats on high o'er vales and hills,",
+    "full_text": "I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host, of golden daffodils;\nBeside the lake, beneath the trees,\nFluttering and dancing in the breeze.\n\nContinuous as the stars that shine\nAnd twinkle on the milky way,\nThey stretched in never-ending line\nAlong the margin of a bay:\nTen thousand saw I at a glance,\nTossing their heads in sprightly dance.\n\nThe waves beside them danced; but they\nOut-did the sparkling waves in glee:\nA poet could not but be gay,\nIn such a jocund company:\nI gazed—and gazed—but little thought\nWhat wealth the show to me had brought:\n\nFor oft, when on my couch I lie\nIn vacant or in pensive mood,\nThey flash upon that inward eye\nWhich is the bliss of solitude;\nAnd then my heart with pleasure fills,\nAnd dances with the daffodils."
+  },
+  {
+    "slug": "kipling-if",
+    "title": "If—",
+    "author": "Rudyard Kipling",
+    "language": "en",
+    "era": "Victorian",
+    "themes": [
+      "character",
+      "resilience",
+      "wisdom"
+    ],
+    "difficulty": "hard",
+    "excerpt": "If you can keep your head when all about you\nAre losing theirs and blaming it on you,",
+    "full_text": "If you can keep your head when all about you\nAre losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\nBut make allowance for their doubting too;\nIf you can wait and not be tired by waiting,\nOr being lied about, don't deal in lies,\nOr being hated, don't give way to hating,\nAnd yet don't look too good, nor talk too wise:\n\nIf you can dream—and not make dreams your master;\nIf you can think—and not make thoughts your aim;\nIf you can meet with Triumph and Disaster\nAnd treat those two impostors just the same;\nIf you can bear to hear the truth you've spoken\nTwisted by knaves to make a trap for fools,\nOr watch the things you gave your life to, broken,\nAnd stoop and build 'em up with worn-out tools:\n\nIf you can make one heap of all your winnings\nAnd risk it on one turn of pitch-and-toss,\nAnd lose, and start again at your beginnings\nAnd never breathe a word about your loss;\nIf you can force your heart and nerve and sinew\nTo serve your turn long after they are gone,\nAnd so hold on when there is nothing in you\nExcept the Will which says to them: 'Hold on!'\n\nIf you can talk with crowds and keep your virtue,\nOr walk with Kings—nor lose the common touch,\nIf neither foes nor loving friends can hurt you,\nIf all men count with you, but none too much;\nIf you can fill the unforgiving minute\nWith sixty seconds' worth of distance run,\nYours is the Earth and everything that's in it,\nAnd—which is more—you'll be a Man, my son!"
+  },
+  {
+    "slug": "pushkin-winter-morning",
+    "title": "Зимнее утро (A Winter Morning)",
+    "author": "А. С. Пушкин",
+    "language": "ru",
+    "era": "Golden Age",
+    "themes": [
+      "nature",
+      "winter",
+      "morning"
+    ],
+    "difficulty": "easy",
+    "excerpt": "Мороз и солнце; день чудесный!\nЕщё ты дремлешь, друг прелестный —",
+    "full_text": "Мороз и солнце; день чудесный!\nЕщё ты дремлешь, друг прелестный —\nПора, красавица, проснись:\nОткрой сонмом закрытых негой\nНапору взоров наслажденье\nИ встреть осеннее восторженно\nСевера веселое мгновенье!\n\nУж ветер тих, дыхание полно\nЗамерзшей речки сонно-вольной;\nИ взору снег блестит волной,\nЯрким блеском озарённой."
+  },
+  {
+    "slug": "pushkin-cloud",
+    "title": "Туча (The Cloud)",
+    "author": "А. С. Пушкин",
+    "language": "ru",
+    "era": "Golden Age",
+    "themes": [
+      "cloud",
+      "sky",
+      "image"
+    ],
+    "difficulty": "easy",
+    "excerpt": "Последняя туча рассеянной бури!",
+    "full_text": "Последняя туча рассеянной бури!\nОдна ты несёшься по ясной лазури,\nОдна ты наводишь унылую тень,\nОдна ты печалишь дугою денницы.\nТы небо не скроешь ненастной дугой,\nИ бурю не скроешь ты вскоре за собой:\nУйдёшь, и исчезнет погоня за тобой,\nИ вскоре согреет земли потоки\nПолуденный блеск твоих волокон."
+  },
+  {
+    "slug": "tyutchev-silentium",
+    "title": "Silentium!",
+    "author": "Ф. И. Тютчев",
+    "language": "ru",
+    "era": "19th century",
+    "themes": [
+      "silence",
+      "soul",
+      "expression"
+    ],
+    "difficulty": "medium",
+    "excerpt": "Молчи, скрывайся и таи\nИ чувства и мечты свои —",
+    "full_text": "Молчи, скрывайся и таи\nИ чувства и мечты свои —\nПускай в душевной глубине\nВстают и заходят оне\nБезмолвно, как звёзды в ночи —\nЛюбуясь ими — молчи!\n\nКак сердцу высказать себя?\nДругому как понять тебя?\nПоймёт ли он, чем ты живёшь?\nМысль изречённая есть ложь.\nВзрывая, возмутишь ключи —\nПитайся ими — и молчи!\n\nЛишь жить в себе самом умей —\nЕсть целый мир в душе твоей\nТаинственно-волшебных дум;\nИх оглушит наружный шум,\nДневные разгонят лучи, —\nВнимай их пенью — и молчи!"
+  },
+  {
+    "slug": "esenin-letter",
+    "title": "Письмо к женщине",
+    "author": "С. А. Есенин",
+    "language": "ru",
+    "era": "20th century",
+    "themes": [
+      "love",
+      "farewell",
+      "emotion"
+    ],
+    "difficulty": "medium",
+    "excerpt": "Вы помните,\nВы всё, конечно, помните,\nКак я стоял,\nПриблизившись к стене,\nВзволнованно ходили вы по комнате\nИ что-то резкое\nВ лицо бросали мне.\nВы говорили:\nНам пора расстаться,\nЧто вас измучила\nМоя шальная жизнь,\nЧто вам пора за дело приниматься,\nА мой удел -\nКатиться дальше, вниз.\nЛюбимая!\nМеня вы не любили.\nНе знали вы, что в сонмище людском\nЯ был как лошадь, загнанная в мыле,\nПришпоренная смелым ездоком.\nНе знали вы,\nЧто я в сплошном дыму,\nВ развороченном бурей быте\nС…",
+    "full_text": "Вы помните,\nВы всё, конечно, помните,\nКак я стоял,\nПриблизившись к стене,\nВзволнованно ходили вы по комнате\nИ что-то резкое\nВ лицо бросали мне.\nВы говорили:\nНам пора расстаться,\nЧто вас измучила\nМоя шальная жизнь,\nЧто вам пора за дело приниматься,\nА мой удел -\nКатиться дальше, вниз.\nЛюбимая!\nМеня вы не любили.\nНе знали вы, что в сонмище людском\nЯ был как лошадь, загнанная в мыле,\nПришпоренная смелым ездоком.\nНе знали вы,\nЧто я в сплошном дыму,\nВ развороченном бурей быте\nС того и мучаюсь, что не пойму -\nКуда несет нас рок событий.\nЛицом к лицу\nЛица не увидать.\nБольшое видится на расстоянье.\nКогда кипит морская гладь -\nКорабль в плачевном состояньи.\nЗемля - корабль!\nНо кто-то вдруг\nЗа новой жизнью, новой славой\nВ прямую гущу бурь и вьюг\nЕе направил величаво.\nНу кто ж из нас на палубе большой\nНе падал, не блевал и не ругался?\nИх мало, с опытной душой,\nКто крепким в качке оставался.\nТогда и я,\nПод дикий шум,\nНо зрело знающий работу,\nСпустился в корабельный трюм,\nЧтоб не смотреть людскую рвоту.\nТот трюм был -\nРусским кабаком.\nИ я склонился над стаканом,\nЧтоб, не страдая ни о ком,\nСебя сгубить\nВ угаре пьяном.\nЛюбимая!\nЯ мучил вас,\nУ вас была тоска\nВ глазах усталых:\nЧто я пред вами напоказ\nСебя растрачивал в скандалах.\nНо вы не знали,\nЧто в сплошном дыму,\nВ развороченном бурей быте\nС того и мучаюсь,\nЧто не пойму,\nКуда несет нас рок событий...\nТеперь года прошли.\nЯ в возрасте ином.\nИ чувствую и мыслю по-иному.\nИ говорю за праздничным вином:\nХвала и слава рулевому!\nСегодня я\nВ ударе нежных чувств.\nЯ вспомнил вашу грустную усталость.\nИ вот теперь\nЯ сообщить вам мчусь,\nКаков я был,\nИ что со мною сталось!\nЛюбимая!\nСказать приятно мне:\nЯ избежал паденья с кручи.\nТеперь в Советской стороне\nЯ самый яростный попутчик.\nЯ стал не тем,\nКем был тогда.\nНе мучил бы я вас,\nКак это было раньше.\nЗа знамя вольности\nИ светлого труда\nГотов идти хоть до Ла-Манша.\nПростите мне...\nЯ знаю: вы не та -\nЖивете вы\nС серьезным, умным мужем;\nЧто не нужна вам наша маета,\nИ сам я вам\nНи капельки не нужен.\nЖивите так,\nКак вас ведет звезда,\nПод кущей обновленной сени.\nС приветствием,\nВас помнящий всегда\nЗнакомый ваш\nСергей Есенин."
+  },
+  {
+    "slug": "lermontov-sail",
+    "title": "Парус (The Sail)",
+    "author": "М. Ю. Лермонтов",
+    "language": "ru",
+    "era": "19th century",
+    "themes": [
+      "sea",
+      "freedom",
+      "storm"
+    ],
+    "difficulty": "easy",
+    "excerpt": "Белеет парус одинокой\nВ тумане моря голубом!",
+    "full_text": "Белеет парус одинокой\nВ тумане моря голубом!..\nЧто ищет он в стране далёкой?\nЧто кинул он в краю родном?..\n\nИграют волны — ветер свищет,\nИ мачта гнётся и скрипит…\nУвы! он счастия не ищет\nИ не от счастия бежит!\n\nПод ним струя светлей лазури,\nНад ним луч солнца золотой;\nА он, мятежный, просит бури,\nКак будто в буресть есть покой!"
+  },
+  {
+    "slug": "neruda-tonight",
+    "title": "Tonight I Can Write (excerpt, English translation)",
+    "author": "Pablo Neruda (trans.)",
+    "language": "en",
+    "era": "20th century",
+    "themes": [
+      "love",
+      "night",
+      "loss"
+    ],
+    "difficulty": "medium",
+    "excerpt": "Tonight I can write the saddest lines.\nWrite, for example: \"The night is shattered\nand the blue stars shiver in the distance.\"",
+    "full_text": "Tonight I can write the saddest lines.\nWrite, for example: \"The night is shattered\nand the blue stars shiver in the distance.\"\n\nThe night wind revolves in the sky and sings.\nTonight I can write the saddest lines.\nI loved her, and sometimes she loved me too.\n\nThrough nights like this one I held her in my arms.\nI kissed her again and again under the endless sky.\n\nShe loved me, sometimes I loved her too.\nHow could one not have loved her great still eyes.\n\nTonight I can write the saddest lines.\nTo think that I do not have her. To feel that I have lost her.\n\nTo hear the immense night, still more immense without her.\nAnd the verse falls to the soul like dew to the pasture.\n\nWhat does it matter that my love could not keep her.\nThe night is shattered and she is not with me.\n\nThis is all. In the distance someone is singing. In the distance.\nMy soul is not satisfied that it has lost her.\n\nMy sight tries to find her as though to bring her closer.\nMy heart looks for her, and she is not with me.\n\nThe same night whitening the same trees.\nWe, of that time, are no longer the same.\n\nI no longer love her, that's certain, but how I loved her.\nMy voice tried to find the wind to touch her hearing.\n\nAnother's. She will be another's. As she was before my kisses.\nHer voice, her bright body. Her infinite eyes.\n\nI no longer love her, that's certain, but maybe I love her.\nLove is so short, forgetting is so long.\n\nBecause through nights like this one I held her in my arms\nmy soul is not satisfied that it has lost her.\n\nThough this be the last pain that she makes me suffer\nand these the last verses that I write for her."
+  }
+]

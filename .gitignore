@@ -1,0 +1,7 @@
+.venv/
+.idea/
+__pycache__/
+*.py[cod]
+*.db
+.env
+backend/data/poetry.db

@@ -74,7 +74,7 @@ def load_english_rows(limit: int = DEFAULT_LIMIT_PER_LANG) -> list[dict[str, Any
             if len(poem) < 80:
                 continue
             title = _clean_title(row.get("Title"))
-            author = _clean_title(row.get("Poet")) or "Unknown"
+            author = _clean_title(row.get("Poet", "Unknown"))
             if not title:
                 first_line = poem.split("\n", 1)[0].strip()
                 title = first_line[:120] + ("…" if len(first_line) > 120 else "")
@@ -111,7 +111,7 @@ def load_russian_rows(limit: int = DEFAULT_LIMIT_PER_LANG) -> list[dict[str, Any
             if len(poem) < 80:
                 continue
             title = _clean_title(row.get("name"))
-            author = _clean_title(row.get("author")) or "Неизвестный автор"
+            author = _clean_title(row.get("author", "Неизвестный автор"))
             if not title:
                 first_line = poem.split("\n", 1)[0].strip()
                 title = first_line[:120] + ("…" if len(first_line) > 120 else "")

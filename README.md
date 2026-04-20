@@ -1,6 +1,6 @@
 # Poetry — Conversational Recommender System
 
-Telegram-first assistant that recommends classic poems in **English** and **Russian**, tracks memorization progress, spaced repetition-style reviews, and supports **text + voice**. Voice is transcribed on the backend with a **local Whisper** model ([faster-whisper](https://github.com/SYSTRAN/faster-whisper)); **ffmpeg** must be installed on the machine running the API (included in the Docker image).
+Telegram assistant that recommends classic poems in **English** and **Russian**, tracks memorization progress, spaced repetition-style reviews, and supports **text + voice**. Voice is transcribed on the backend with a **local Whisper** model ([faster-whisper](https://github.com/SYSTRAN/faster-whisper)); **ffmpeg** must be installed on the machine running the API (included in the Docker image).
 
 Stack: **FastAPI** backend + **pyTelegramBotAPI** bot. LLM traffic goes to **local [SGLang](https://github.com/sgl-project/sglang)** (`lmsysorg/sglang:latest`, model `t-tech/T-lite-it-2.1-FP8`) via the OpenAI-compatible URL `http://127.0.0.1:3000/v1` (see `Dockerfile.llm` and `app/services/llm.py`).
 
@@ -10,7 +10,6 @@ Stack: **FastAPI** backend + **pyTelegramBotAPI** bot. LLM traffic goes to **loc
 - Running **OpenAI-compatible inference** reachable from the backend (`LLM_BASE_URL`)
 - Telegram **bot token** from BotFather
 - **ffmpeg** on the API host (for decoding Telegram voice/audio); Docker image installs it automatically
-- Disk space for Whisper weights (first request downloads the model; size depends on `WHISPER_MODEL_SIZE`, e.g. `base` ~140 MB)
 
 ## Quick start (local, two terminals)
 
@@ -96,19 +95,6 @@ Linux / macOS:
 ```
 
 Ensure `API_URL` in `.env` points at the running API (`http://127.0.0.1:8000` when local).
-
-### Bot commands
-
-| Command | Description |
-|---------|-------------|
-| `/start` | Onboarding / greeting via LLM |
-| `/next` | Next poem recommendation + inline outcomes |
-| `/quiz` | Next text message scored as recall for the current poem slug |
-| `/profile` | Learner snapshot (languages, themes, counts) |
-| `/review` | Poems due for spaced-repetition review in the next ~14 days |
-| `/help` | Short help |
-
-Free-form chat goes through `POST /api/v1/chat`. Inline buttons record recommendation outcomes (`accepted` / `skipped` / `mastered`).
 
 ## Deployment with Docker Compose
 

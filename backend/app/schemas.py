@@ -35,6 +35,11 @@ class ChatRequest(BaseModel):
     telegram_user_id: int
     display_name: str | None = None
     message: str = Field(..., min_length=1, max_length=12000)
+    last_bot_message: str | None = Field(
+        None,
+        max_length=14000,
+        description="Последний текст бота пользователю до этого сообщения (напр. карточка из Telegram).",
+    )
 
 
 class ChatResponse(BaseModel):

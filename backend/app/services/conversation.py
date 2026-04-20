@@ -30,6 +30,56 @@ async def recent_history(session: AsyncSession, learner_id: int, limit: int = 14
     return [{"role": r.role, "content": r.content} for r in rows]
 
 
+_CONTINUITY_MAX = 12000
+
+
+async def fetch_last_assistant_content(session: AsyncSession, learner_id: int) -> str | None:
+    q = await session.execute(
+        select(ChatMessage.content)
+        .where(ChatMessage.learner_id == learner_id, ChatMessage.role == "assistant")
+        .order_by(ChatMessage.id.desc())
+        .limit(1)
+    )
+    raw = q.scalar_one_or_none()
+    if raw is None:
+        return None
+    s = str(raw).strip()
+    return s if s else None
+
+
+def _same_message_body(a: str | None, b: str | None) -> bool:
+    if not a or not b:
+        return False
+    return a.strip() == b.strip()
+
+
+def build_continuity_prefix(
+    *,
+    history_tail: list[dict[str, str]],
+    client_last_bot: str | None,
+    db_last_assistant: str | None,
+) -> str:
+    """Текст перед блоком профиля/каталога: что бот только что писал пользователю (видно модели явно)."""
+    c = (client_last_bot or "").strip()
+    if c:
+        return (
+            "Последнее сообщение бота пользователю (контекст до этого сообщения пользователя):\n---\n"
+            + c[:_CONTINUITY_MAX]
+            + "\n---\n\n"
+        )
+    ldb = (db_last_assistant or "").strip()
+    if not ldb:
+        return ""
+    last = history_tail[-1] if history_tail else None
+    if last and last.get("role") == "assistant" and _same_message_body(last.get("content"), ldb):
+        return ""
+    return (
+        "Последнее сообщение ассистента в сохранённом диалоге (до текущего сообщения пользователя):\n---\n"
+        + ldb[:_CONTINUITY_MAX]
+        + "\n---\n\n"
+    )
+
+
 async def profile_snapshot(session: AsyncSession, learner: Learner) -> dict[str, Any]:
     memorized, learning, due_review = await learner_stats(session, learner.id)
     lp_rows = await session.execute(
@@ -231,12 +281,21 @@ async def handle_user_message(
     *,
     learner: Learner,
     text: str,
+    last_bot_message: str | None = None,
 ) -> tuple[str, dict[str, Any] | None, str | None]:
     if _is_stats_command(text):
         reply_text = await learner_stats_reply_text(session, learner)
         await append_message(session, learner.id, "user", text)
         await append_message(session, learner.id, "assistant", reply_text)
         return reply_text, None, None
+
+    history = await recent_history(session, learner.id, limit=14)
+    db_last_assistant = await fetch_last_assistant_content(session, learner.id)
+    continuity = build_continuity_prefix(
+        history_tail=history[-10:] if history else [],
+        client_last_bot=last_bot_message,
+        db_last_assistant=db_last_assistant,
+    )
 
     snap = await profile_snapshot(session, learner)
     attempts = await recent_attempts(session, learner.id)
@@ -256,7 +315,7 @@ async def handle_user_message(
     profile_blob = json.dumps(snap, ensure_ascii=False)
     attempts_blob = json.dumps(attempts, ensure_ascii=False)
 
-    user_payload = (
+    user_payload = continuity + (
         f"Learner profile JSON:\n{profile_blob}\n\n"
         f"Recent memorization tries:\n{attempts_blob}\n\n"
         "Poem catalog (slugs for reply_segments only):\n"
@@ -265,7 +324,6 @@ async def handle_user_message(
         + text
     )
 
-    history = await recent_history(session, learner.id, limit=14)
     messages = history[-10:] + [{"role": "user", "content": user_payload}]
 
     raw = await chat_completion(

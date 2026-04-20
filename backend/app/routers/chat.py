@@ -25,7 +25,12 @@ async def chat_turn(body: ChatRequest, session: AsyncSession = Depends(get_sessi
     if not learner.onboarding_done:
         raise HTTPException(status_code=403, detail="onboarding_required")
 
-    reply, meta, placeholder_slug = await handle_user_message(session, learner=learner, text=body.message)
+    reply, meta, placeholder_slug = await handle_user_message(
+        session,
+        learner=learner,
+        text=body.message,
+        last_bot_message=body.last_bot_message,
+    )
     await apply_profile_updates(session, learner, meta)
     slug_hint = extract_recommend_slug(meta, reply) or placeholder_slug
     return ChatResponse(reply=reply, poem_slug_hint=slug_hint)

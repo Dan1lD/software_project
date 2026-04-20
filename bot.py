@@ -8,6 +8,7 @@ import asyncio
 import json
 import logging
 import os
+from typing import Any
 
 import httpx
 from dotenv import load_dotenv
@@ -39,8 +40,16 @@ HELP_TEXT = (
 )
 
 
-async def api_chat(user_id: int, text: str, display_name: str | None = None) -> tuple[str, str | None]:
-    payload = {"telegram_user_id": user_id, "message": text, "display_name": display_name}
+async def api_chat(
+    user_id: int,
+    text: str,
+    display_name: str | None = None,
+    *,
+    last_bot_message: str | None = None,
+) -> tuple[str, str | None]:
+    payload: dict[str, Any] = {"telegram_user_id": user_id, "message": text, "display_name": display_name}
+    if last_bot_message and str(last_bot_message).strip():
+        payload["last_bot_message"] = str(last_bot_message).strip()[:14000]
     async with httpx.AsyncClient(timeout=120.0) as client:
         r = await client.post(f"{API_URL}/api/v1/chat", json=payload)
         r.raise_for_status()
@@ -151,6 +160,8 @@ LAST_GRADED_SLUG: dict[int, str | None] = {}
 # Последний slug из ответа чата (коуч мог показать другое произведение — не затирает MEMORIZE_SLUG).
 CHAT_POEM_HINT: dict[int, str | None] = {}
 QUIZ_PENDING: dict[int, bool] = {}
+# Последнее исходящее сообщение бота в чат (для контекста LLM при следующем сообщении пользователя).
+LAST_BOT_OUTBOUND_TEXT: dict[int, str] = {}
 # Анкета шаг «темы»: пары (подпись кнопки, каноническое значение для БД); выбор по telegram user id.
 THEME_PAIRS: dict[int, list[tuple[str, str]]] = {}
 THEME_SELECTION: dict[int, set[str]] = {}
@@ -180,6 +191,13 @@ def theme_choice_pairs(prefers_en: bool, prefers_ru: bool) -> list[tuple[str, st
     return pairs
 
 TG_MSG_LIMIT = 4096
+
+
+def remember_bot_outbound_text(chat_id: int, content: str | None) -> None:
+    text = (content or "").strip()
+    if not text:
+        return
+    LAST_BOT_OUTBOUND_TEXT[chat_id] = text[:12000]
 
 
 def _slug_for_keyword_check(chat_id: int) -> str | None:
@@ -414,6 +432,7 @@ async def send_message_chunks(chat_id: int, text: str, **kwargs) -> None:
     t = text or ""
     if not t.strip():
         return
+    remember_bot_outbound_text(chat_id, t)
     chunks: list[str] = []
     while t:
         chunks.append(t[:TG_MSG_LIMIT])
@@ -627,12 +646,13 @@ async def activate_quiz_mode(
         label = _poem_label_from_api(await api_poem_meta(slug))
     except httpx.HTTPError:
         log.warning("api_poem_meta failed for slug=%s", slug)
-    await bot.send_message(
-        chat_id,
+    quiz_intro = (
         f"Режим проверки: {label}\n"
         "(стих из последней рекомендации /next)\n"
-        "Следующее текстовое сообщение будет оценено как попытка вспомнить стих.",
+        "Следующее текстовое сообщение будет оценено как попытка вспомнить стих."
     )
+    remember_bot_outbound_text(chat_id, quiz_intro)
+    await bot.send_message(chat_id, quiz_intro)
 
 
 @bot.message_handler(commands=["quiz"])
@@ -827,15 +847,23 @@ async def route_text(chat_id: int, user_id: int, text: str, display_name: str | 
         if pt:
             header = f"«{pt}» — {pa}\n\n" if pa else f"«{pt}»\n\n"
         LAST_GRADED_SLUG[chat_id] = slug_for_check
+        quiz_body = f"{header}Оценка: {score:.2f}\n{fb}"
+        remember_bot_outbound_text(chat_id, quiz_body)
         await bot.send_message(
             chat_id,
-            f"{header}Оценка: {score:.2f}\n{fb}",
+            quiz_body,
             reply_markup=QuizResultFollowupKeyboard(),
         )
         return
 
     try:
-        reply, hint = await api_chat(user_id, stripped, display_name=display_name)
+        last_ctx = LAST_BOT_OUTBOUND_TEXT.pop(chat_id, None)
+        reply, hint = await api_chat(
+            user_id,
+            stripped,
+            display_name=display_name,
+            last_bot_message=last_ctx,
+        )
     except httpx.HTTPStatusError as e:
         if e.response.status_code == 403:
             await resume_onboarding(chat_id, user_id)

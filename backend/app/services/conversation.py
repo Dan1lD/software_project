@@ -3,7 +3,8 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from app.models.tables import ChatMessage, Learner, LearnerPoem, MemorizationAttempt, Poem
+from app.models.tables import (ChatMessage, Learner, LearnerPoem,
+                               MemorizationAttempt, Poem)
 from app.services.learner_stats_view import learner_stats_reply_text
 from app.services.llm import chat_completion, extract_json_block
 from app.services.poem_placeholders import expand_poem_placeholders

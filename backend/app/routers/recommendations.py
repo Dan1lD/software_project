@@ -2,16 +2,14 @@ from __future__ import annotations
 
 from app.database import get_session
 from app.models.tables import PoemLanguage
-from app.schemas import NextRecommendationResponse, OutcomeRequest, PoemCatalogCard
+from app.schemas import (NextRecommendationResponse, OutcomeRequest,
+                         PoemCatalogCard)
 from app.services.llm import chat_completion
 from app.services.memorization import get_poem_by_slug
 from app.services.poem_placeholders import poem_body_for_display
-from app.services.recommendation import (
-    attach_recommendation,
-    get_or_create_learner,
-    pick_next_poem,
-    record_outcome,
-)
+from app.services.recommendation import (attach_recommendation,
+                                         get_or_create_learner, pick_next_poem,
+                                         record_outcome)
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 

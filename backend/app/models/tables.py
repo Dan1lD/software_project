@@ -4,18 +4,8 @@ import enum
 from datetime import datetime
 
 from app.database import Base
-from sqlalchemy import (
-    BigInteger,
-    Boolean,
-    DateTime,
-    Enum,
-    Float,
-    ForeignKey,
-    Integer,
-    String,
-    Text,
-    UniqueConstraint,
-)
+from sqlalchemy import (BigInteger, Boolean, DateTime, Enum, Float, ForeignKey,
+                        Integer, String, Text, UniqueConstraint)
 from sqlalchemy.dialects.sqlite import JSON as SQLiteJSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 

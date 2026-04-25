@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-from app.models.tables import LearnerPoem, LearnerPoemStatus, MemorizationAttempt, Poem
+from app.models.tables import (LearnerPoem, LearnerPoemStatus,
+                               MemorizationAttempt, Poem)
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 

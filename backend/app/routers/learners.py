@@ -4,7 +4,8 @@ from datetime import datetime, timedelta, timezone
 
 from app.database import get_session
 from app.models.tables import LearnerPoem, MemorizationAttempt, Poem
-from app.schemas import LearnerDashboard, LearnerProfilePatch, LearnerPublic, LearnerStatsResponse
+from app.schemas import (LearnerDashboard, LearnerProfilePatch, LearnerPublic,
+                         LearnerStatsResponse)
 from app.services.learner_stats_view import learner_stats_response_with_summary
 from app.services.recommendation import get_or_create_learner, learner_stats
 from fastapi import APIRouter, Depends

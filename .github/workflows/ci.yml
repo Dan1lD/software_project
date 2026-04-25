@@ -30,6 +30,4 @@ jobs:
         run: isort --check-only --diff backend
 
       - name: Run unit tests
-        env:
-          PYTHONPATH: backend
         run: pytest -q backend/tests

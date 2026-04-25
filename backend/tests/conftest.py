@@ -1,18 +1,12 @@
 from __future__ import annotations
 
 import asyncio
-import sys
 from pathlib import Path
 
 import pytest
 from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
-ROOT_DIR = Path(__file__).resolve().parents[2]
-BACKEND_DIR = ROOT_DIR / "backend"
-if str(BACKEND_DIR) not in sys.path:
-    sys.path.insert(0, str(BACKEND_DIR))
 
 from app.database import Base
 from app.models.tables import Poem, PoemLanguage

@@ -1,8 +1,5 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.database import get_session
 from app.schemas import ChatRequest, ChatResponse
 from app.services.conversation import (
@@ -11,6 +8,8 @@ from app.services.conversation import (
     handle_user_message,
 )
 from app.services.recommendation import get_or_create_learner
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(tags=["chat"])
 

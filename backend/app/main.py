@@ -2,9 +2,6 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 
-from fastapi import APIRouter, FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
 from app.config import get_settings
 from app.database import async_session_factory, init_db
 from app.routers.chat import router as chat_router
@@ -14,6 +11,8 @@ from app.routers.memorization import router as memorization_router
 from app.routers.recommendations import router as recommend_router
 from app.routers.transcription import router as speech_router
 from app.seed import seed_poems
+from fastapi import APIRouter, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager

@@ -2,15 +2,14 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter, Depends
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.database import get_session
 from app.models.tables import LearnerPoem, MemorizationAttempt, Poem
 from app.schemas import LearnerDashboard, LearnerProfilePatch, LearnerPublic, LearnerStatsResponse
 from app.services.learner_stats_view import learner_stats_response_with_summary
 from app.services.recommendation import get_or_create_learner, learner_stats
+from fastapi import APIRouter, Depends
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/learners", tags=["learners"])
 

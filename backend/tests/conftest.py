@@ -3,11 +3,6 @@ from __future__ import annotations
 import asyncio
 from pathlib import Path
 
-import pytest
-from fastapi import APIRouter, FastAPI
-from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
 from app.database import Base
 from app.models.tables import Poem, PoemLanguage
 from app.routers.chat import router as chat_router
@@ -16,6 +11,10 @@ from app.routers.learners import router as learners_router
 from app.routers.memorization import router as memorization_router
 from app.routers.recommendations import router as recommendations_router
 from app.routers.transcription import router as transcription_router
+from fastapi import APIRouter, FastAPI
+from fastapi.testclient import TestClient
+import pytest
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 
 @pytest.fixture

@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from fastapi.testclient import TestClient
-
 from app.routers import chat as chat_router_module
 from app.routers import memorization as memorization_router_module
 from app.routers import recommendations as recommendations_router_module
 from app.routers import transcription as transcription_router_module
+from fastapi.testclient import TestClient
 
 
 def test_health(client: TestClient) -> None:

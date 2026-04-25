@@ -1,11 +1,14 @@
 from collections.abc import AsyncGenerator
 from pathlib import Path
 
-from sqlalchemy.engine.url import make_url
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
-
 from app.config import get_settings
+from sqlalchemy.engine.url import make_url
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):

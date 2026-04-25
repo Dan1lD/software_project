@@ -3,6 +3,7 @@ from __future__ import annotations
 import enum
 from datetime import datetime
 
+from app.database import Base
 from sqlalchemy import (
     BigInteger,
     Boolean,
@@ -17,8 +18,6 @@ from sqlalchemy import (
 )
 from sqlalchemy.dialects.sqlite import JSON as SQLiteJSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.database import Base
 
 
 class PoemLanguage(str, enum.Enum):

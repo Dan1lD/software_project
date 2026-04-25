@@ -12,10 +12,9 @@ from __future__ import annotations
 
 import re
 
+from app.models.tables import Poem
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.models.tables import Poem
 
 _PLACEHOLDER = re.compile(r"\[\[(poem_full|poem):([a-zA-Z0-9_-]+)\]\]")
 

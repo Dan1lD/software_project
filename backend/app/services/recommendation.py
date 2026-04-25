@@ -2,10 +2,6 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
-
 from app.models.tables import (
     Learner,
     LearnerPoem,
@@ -16,6 +12,9 @@ from app.models.tables import (
     RecommendationOutcome,
 )
 from app.schemas import LearnerPublic, LearnerStatsResponse
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 
 def _utcnow() -> datetime:

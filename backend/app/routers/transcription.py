@@ -5,9 +5,8 @@ import logging
 import tempfile
 from pathlib import Path
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
-
 from app.services.local_whisper import transcribe_audio_file
+from fastapi import APIRouter, File, HTTPException, UploadFile
 
 router = APIRouter(prefix="/speech", tags=["speech"])
 log = logging.getLogger(__name__)

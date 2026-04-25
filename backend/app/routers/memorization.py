@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.database import get_session
 from app.schemas import MemorizationRequest, MemorizationResponse, PoemMetaResponse
 from app.services.llm import judge_memorization
 from app.services.memorization import get_poem_by_slug, save_attempt, schedule_after_attempt
 from app.services.recommendation import get_or_create_learner
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/memorization", tags=["memorization"])
 

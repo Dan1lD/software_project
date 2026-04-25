@@ -5,9 +5,8 @@ import json
 import re
 from typing import Any
 
-from openai import OpenAI
-
 from app.config import get_settings
+from openai import OpenAI
 
 
 def _client() -> OpenAI:

@@ -3,15 +3,14 @@ from __future__ import annotations
 import json
 from typing import Any
 
+from app.models.tables import ChatMessage, Learner, LearnerPoem, MemorizationAttempt, Poem
+from app.services.learner_stats_view import learner_stats_reply_text
+from app.services.llm import chat_completion, extract_json_block
+from app.services.poem_placeholders import expand_poem_placeholders
+from app.services.recommendation import learner_stats
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-
-from app.models.tables import ChatMessage, Learner, LearnerPoem, MemorizationAttempt, Poem
-from app.services.llm import chat_completion, extract_json_block
-from app.services.poem_placeholders import expand_poem_placeholders
-from app.services.learner_stats_view import learner_stats_reply_text
-from app.services.recommendation import learner_stats
 
 
 async def append_message(session: AsyncSession, learner_id: int, role: str, content: str) -> None:

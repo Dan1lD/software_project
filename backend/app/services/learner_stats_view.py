@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.models.tables import Learner
 from app.schemas import LearnerStatsResponse
 from app.services.recommendation import build_learner_stats_response
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 def format_learner_stats_ru(s: LearnerStatsResponse) -> str:

@@ -176,6 +176,8 @@ LICENSE               # MIT
 | POST | `/api/v1/memorization/check` | Score recall vs excerpt (`telegram_user_id` query + JSON body) |
 | POST | `/api/v1/speech/transcribe` | Multipart audio → text (local Whisper + ffmpeg) |
 
+Подробное описание эндпоинтов: `backend/API.md`.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

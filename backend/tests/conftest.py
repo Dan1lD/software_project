@@ -66,7 +66,7 @@ def client(tmp_path: Path) -> TestClient:
     with TestClient(app) as test_client:
         yield test_client
 
-    engine.dispose()
+    asyncio.run(engine.dispose())
 
 
 @pytest.fixture
